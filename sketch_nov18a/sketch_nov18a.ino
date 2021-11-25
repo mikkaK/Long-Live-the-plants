@@ -104,9 +104,6 @@ void loop() {
     double moisture_percentage;
     double initial;
 
-
-
-
     //moisture_percentage = ( 100.00 - ( (analogRead(sensor_pin)/1023.00) * 100.00 ) );
     initial = ((analogRead(sensor_pin) * 100) / 4095);
     moisture_percentage = (100 - initial);
@@ -173,8 +170,7 @@ void loop() {
     //char buffer [] = callback(message);
     //ret = strcmp(condition, message);
 
-    delay(1000);
-    client.loop();
   }
-
+    delay(200);
+    client.loop();
 }
