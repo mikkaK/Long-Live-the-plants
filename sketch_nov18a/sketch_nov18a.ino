@@ -9,8 +9,10 @@ const char* ssid = "GuestWLANPortal";
 const char* mqtt_server = "142.93.174.193";
 const int sensor_pin = 36;  /* Connect Soil moisture analog sensor pin to A0 of NodeMCU */
 
-const char* topic1 = "zurich/lltp/moisture/in";
-const char* topic2 = "zurich/lltp/moisture/out";
+const char* topic1 = "zh/team6/lltp/moisture/in";
+const char* topic2 = "zh/team6/lltp/moisture/out";
+const char* topic3 = "zh/team6/lltp/water/in";
+
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -18,7 +20,7 @@ void setup_wifi() {
 Serial.print("Connecting to ");
 Serial.print(ssid); WiFi.begin(ssid);
 while(WiFi.status() != WL_CONNECTED) {
-  delay(500);
+  delay(500); 
   Serial.print(".");
   }
   Serial.println("done!");
@@ -84,12 +86,16 @@ double moist = 30;
 double prettymoist = 45;
 double wet = 55;
 double reallywet= 100;
+int water = 0;
+
 
   if (moisture_percentage < dry){
         analogWrite(PIN_RED, 255);
   analogWrite(PIN_GREEN, 0);
   analogWrite(PIN_BLUE, 0);
   delay(100);
+      char WaterBuffer[] = "yes";
+     client.publish(topic3, WaterBuffer);
   }
   
   else if (moisture_percentage > dry && moisture_percentage < almostdry){
@@ -97,18 +103,22 @@ double reallywet= 100;
   analogWrite(PIN_GREEN, 63);
   analogWrite(PIN_BLUE, 0);  
   delay(100);
+    char WaterBuffer[] = "yes";
+     client.publish(topic3, WaterBuffer);
   }
   else if (moisture_percentage > almostdry && moisture_percentage < moist){
          analogWrite(PIN_RED, 129);
   analogWrite(PIN_GREEN, 126);
   analogWrite(PIN_BLUE, 0);  
   delay(100); 
+  water = 0;
   }
   else if (moisture_percentage > moist && moisture_percentage < prettymoist){
          analogWrite(PIN_RED, 66);
   analogWrite(PIN_GREEN, 159);
   analogWrite(PIN_BLUE, 0);  
   delay(100); 
+  water = 0;
   }
   else if (moisture_percentage > prettymoist && moisture_percentage < wet){
          analogWrite(PIN_RED, 66);
@@ -121,10 +131,13 @@ double reallywet= 100;
   analogWrite(PIN_GREEN, 0);
   analogWrite(PIN_BLUE, 255);
     delay(100);
+    water = 0;
   }
   char MoistBuffer[1000];
   sprintf(MoistBuffer, "%f", moisture_percentage);
   client.publish(topic1, MoistBuffer);
+  
+ 
 
   delay(200);
   client.loop();
