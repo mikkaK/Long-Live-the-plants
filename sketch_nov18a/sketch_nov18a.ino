@@ -4,14 +4,17 @@
 #define PIN_RED    23 // GIOP23
 #define PIN_GREEN  22 // GIOP22
 #define PIN_BLUE   21 // GIOP21
+#define ledPin 15
 
 const char* ssid = "GuestWLANPortal";
 const char* mqtt_server = "142.93.174.193";
+const char* mqtt_username = "plants";
+const char* mqtt_password = "Hansli1999";
 const int sensor_pin = 36;  /* Connect Soil moisture analog sensor pin to A0 of NodeMCU */
 
-const char* topic1 = "zh/team6/lltp/moisture/in";
-const char* topic2 = "zh/team6/lltp/moisture/out";
-const char* topic3 = "zh/team6/lltp/water/in";
+const char* topic1 = "zurich/long-live-the-plants/lltp/moisture/in";
+const char* topic2 = "zurich/long-live-the-plants/lltp/moisture/out";
+const char* topic3 = "zurich/long-live-the-plants/lltp/water/in";
 
 
 WiFiClient espClient;
@@ -22,6 +25,13 @@ Serial.print(ssid); WiFi.begin(ssid);
 while(WiFi.status() != WL_CONNECTED) {
   delay(500); 
   Serial.print(".");
+  analogWrite(PIN_RED, 255);
+  analogWrite(PIN_GREEN, 0);
+  analogWrite(PIN_BLUE, 0);
+    delay(50);
+      analogWrite(PIN_RED, 0);
+  analogWrite(PIN_GREEN, 0);
+  analogWrite(PIN_BLUE, 0);
   }
   Serial.println("done!");
   Serial.print("IP address: ");
@@ -39,6 +49,7 @@ void setup() {
   pinMode(PIN_GREEN, OUTPUT);
   pinMode(PIN_BLUE,  OUTPUT);
 
+
 }
 
 
@@ -54,7 +65,7 @@ void setup() {
 void reconnect() {
   Serial.print("Attempting MQTT connection...");
   while(!client.connected()) {
-    if(client.connect("ESP32")) {
+    if(client.connect("ESP32_Long-Live-the-plants", mqtt_username, mqtt_password)) {
       Serial.println("done!");
       client.subscribe(topic1);
       client.subscribe(topic2);
@@ -67,7 +78,7 @@ void reconnect() {
     }
 void loop() {
   if(!client.connected()) {
-    reconnect(); 
+   reconnect(); 
     }
  double moisture_percentage;
  double initial;
@@ -139,6 +150,6 @@ int water = 0;
   
  
 
-  delay(200);
+  delay(1000);
   client.loop();
 }
