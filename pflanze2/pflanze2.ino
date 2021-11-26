@@ -15,8 +15,8 @@ const char* mqtt_server = "142.93.174.193";
 const char* mqtt_username = "plants";
 const char* mqtt_password = "Hansli1999";
 const int sensor_pin = 36; /* Connect Soil moisture analog sensor pin to A0 of NodeMCU */
-const char* topic1 = "zurich/long-live-the-plants/lltp/moisture/in";
-const char* topic2 = "zurich/long-live-the-plants/lltp/moisture/out";
+const char* topic1 = "zurich/long-live-the-plants/lltp/moisture/in2";
+const char* topic2 = "zurich/long-live-the-plants/lltp/moisture/out2";
 const char* topic3 = "zurich/long-live-the-plants/lltp/water/in";
 //char* temp [6];
 const char* condition[6] = {"false"};
@@ -85,7 +85,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void reconnect() {
   Serial.print("Attempting MQTT connection...");
   while (!client.connected()) {
-    if (client.connect("ESP32_Long-Live-the-plants", mqtt_username, mqtt_password)) {
+    if (client.connect("ESP32_Long-Live-the-plants-2.0", mqtt_username, mqtt_password)) {
       Serial.println("done!");
       client.subscribe(topic1);
       client.subscribe(topic2);
