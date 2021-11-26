@@ -8,6 +8,3 @@ Dies versuchen wir indem wir eine Dienstleistung entwickelt haben die, die zu me
  - [Pflanze 1](/pflanze1/)
  - [Pflanze 2](/pflanze2/)
     
- - [Lernjournal Zollinger Cedric](/pflanze2/)
- - [Lernjournal Kummer Mikka](/Lerndokumentation_Mikka-Kummer.docx/)
- - [Projektdokumentation](/pflanze2/)
