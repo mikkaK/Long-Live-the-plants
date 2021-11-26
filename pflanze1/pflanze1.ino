@@ -168,6 +168,6 @@ void loop() {
     client.publish(topic1, MoistBuffer);
 
   }
-    delay(1000);
+    delay(3600000);
     client.loop();
 }
